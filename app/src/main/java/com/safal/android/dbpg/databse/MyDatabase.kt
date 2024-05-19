@@ -1,5 +1,6 @@
 package com.safal.android.dbpg.databse
 
+import android.util.Log
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
@@ -23,6 +24,13 @@ abstract class MyDatabase : RoomDatabase() {
 
 
     companion object {
+        val DB_CALLBACK = object : Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                db.execSQL(CREATE_DELETE_TASK_OWNER_TRIGGER)
+            }
+        }
+
         val migration1to2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("CREATE TABLE IF NOT EXISTS taskOwner (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL)")

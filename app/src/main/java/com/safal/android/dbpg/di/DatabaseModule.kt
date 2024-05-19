@@ -20,6 +20,7 @@ object DatabaseModule {
             MyDatabase::class.java,
             "mydatabase.db"
         )
+            .addCallback(MyDatabase.DB_CALLBACK)
             .addMigrations(
                 *listOf(
                     MyDatabase.migration1to2,
