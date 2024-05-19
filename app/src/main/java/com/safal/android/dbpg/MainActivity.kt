@@ -15,6 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import com.safal.android.dbpg.app.MyApp
 import com.safal.android.dbpg.databse.dao.TaskDao
 import com.safal.android.dbpg.databse.dao.TaskOwnerDao
+import com.safal.android.dbpg.databse.entity.TaskEntity
+import com.safal.android.dbpg.databse.entity.TaskOwnerEntity
 import com.safal.android.dbpg.ui.theme.DBPGTheme
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,31 +36,55 @@ class MainActivity : ComponentActivity() {
             DBPGTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                        name = "Android", modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
 
+
         lifecycleScope.launch {
+//            insertTasks()
             taskDao.fetchAllTask().map {
                 println(it)
             }
         }
 
         lifecycleScope.launch {
+//            insertTaskOwners()
             taskOwnerDao.fetchAllTaskOwner().map {
                 println(it)
             }
         }
     }
 
+    private suspend fun insertTasks() {
+        for (i in 1..5) {
+            taskDao.insert(
+                TaskEntity(
+                    id = i.toLong(),
+                    title = "Task $i",
+                    description = "Description $i",
+                )
+            )
+        }
+    }
+
+    private suspend fun insertTaskOwners() {
+        for (i in 1..5) {
+            taskOwnerDao.insert(
+                TaskOwnerEntity(
+                    id = i.toLong(),
+                    name = "TaskOwner $i",
+                )
+            )
+        }
+    }
+
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
         Text(
-            text = "Hello $name!",
-            modifier = modifier
+            text = "Hello $name!", modifier = modifier
         )
     }
 

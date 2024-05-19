@@ -13,7 +13,7 @@ import com.safal.android.dbpg.databse.entity.TaskOwnerEntity
     entities = [
         TaskEntity::class,
         TaskOwnerEntity::class
-    ], version = 2, exportSchema = true
+    ], version = 3, exportSchema = true
 )
 abstract class MyDatabase : RoomDatabase() {
 
@@ -28,21 +28,21 @@ abstract class MyDatabase : RoomDatabase() {
                 db.execSQL("CREATE TABLE IF NOT EXISTS taskOwner (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL)")
             }
         }
-//
-//        const val CREATE_DELETE_TASK_OWNER_TRIGGER =
-//            """
-//            CREATE TRIGGER IF NOT EXISTS deleteTaskWhenDeletingTaskOwnerTrigger
-//                AFTER DELETE ON taskOwner
-//            BEGIN
-//                DELETE FROM task WHERE id = OLD.id;
-//            END
-//            """
-//
-//        val migration2to3 = object : Migration(2, 3) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL(CREATE_DELETE_TASK_OWNER_TRIGGER)
-//            }
-//        }
+
+        const val CREATE_DELETE_TASK_OWNER_TRIGGER =
+            """
+            CREATE TRIGGER IF NOT EXISTS deleteTaskWhenDeletingTaskOwnerTrigger
+                AFTER DELETE ON taskOwner
+            BEGIN
+                DELETE FROM task WHERE id = OLD.id;
+            END
+            """
+
+        val migration2to3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(CREATE_DELETE_TASK_OWNER_TRIGGER)
+            }
+        }
 //
 //        val migration3to4 = object : Migration(3, 4) {
 //            override fun migrate(database: SupportSQLiteDatabase) {
