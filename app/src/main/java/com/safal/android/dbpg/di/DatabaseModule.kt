@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.safal.android.dbpg.databse.MyDatabase
 import com.safal.android.dbpg.databse.dao.TaskDao
+import com.safal.android.dbpg.databse.dao.TaskOwnerDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,12 +20,12 @@ object DatabaseModule {
             MyDatabase::class.java,
             "mydatabase.db"
         )
-//            .addMigrations(
-//                MyDatabase.migration1to2,
+            .addMigrations(
+                MyDatabase.migration1to2,
 //                MyDatabase.migration2to3,
 //                MyDatabase.migration3to4,
 //                MyDatabase.migration4to5
-//            )
+            )
             .build()
     }
 
@@ -32,7 +33,7 @@ object DatabaseModule {
     @Provides
     fun provideTaskDao(database: MyDatabase): TaskDao = database.taskDao()
 
-//    @Singleton
-//    @Provides
-//    fun provideTaskOwnerDao(database: MyDatabase): TaskOwnerDao = database.taskOwnerDao()
+    @Singleton
+    @Provides
+    fun provideTaskOwnerDao(database: MyDatabase): TaskOwnerDao = database.taskOwnerDao()
 }

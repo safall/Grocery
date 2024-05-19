@@ -2,30 +2,32 @@ package com.safal.android.dbpg.databse
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.safal.android.dbpg.databse.dao.TaskDao
+import com.safal.android.dbpg.databse.dao.TaskOwnerDao
 import com.safal.android.dbpg.databse.entity.TaskEntity
+import com.safal.android.dbpg.databse.entity.TaskOwnerEntity
 
 @Database(
     entities = [
         TaskEntity::class,
-//        TaskOwnerEntity::class
-    ], version = 1, exportSchema = true
+        TaskOwnerEntity::class
+    ], version = 2, exportSchema = true
 )
 abstract class MyDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
-//    abstract fun taskOwnerDao(): TaskOwnerDao
+    abstract fun taskOwnerDao(): TaskOwnerDao
 
 
-//    companion object {
-//
-//
-//        val migration1to2 = object : Migration(1, 2) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("CREATE TABLE IF NOT EXISTS taskOwner (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL)")
-//            }
-//        }
+    companion object {
+        val migration1to2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS taskOwner (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL)")
+            }
+        }
 //
 //        const val CREATE_DELETE_TASK_OWNER_TRIGGER =
 //            """
@@ -53,5 +55,5 @@ abstract class MyDatabase : RoomDatabase() {
 //                database.execSQL("ALTER TABLE taskOwner ADD COLUMN address TEXT NOT NULL DEFAULT 'Kathmandu'")
 //            }
 //        }
-//    }
+    }
 }

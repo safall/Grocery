@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.safal.android.dbpg.app.MyApp
 import com.safal.android.dbpg.databse.dao.TaskDao
+import com.safal.android.dbpg.databse.dao.TaskOwnerDao
 import com.safal.android.dbpg.ui.theme.DBPGTheme
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,9 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var taskDao: TaskDao
+
+    @Inject
+    lateinit var taskOwnerDao: TaskOwnerDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +46,27 @@ class MainActivity : ComponentActivity() {
                 println(it)
             }
         }
+
+        lifecycleScope.launch {
+            taskOwnerDao.fetchAllTaskOwner().map {
+                println(it)
+            }
+        }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    @Composable
+    fun Greeting(name: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Hello $name!",
+            modifier = modifier
+        )
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DBPGTheme {
-        Greeting("Android")
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        DBPGTheme {
+            Greeting("Android")
+        }
     }
 }
