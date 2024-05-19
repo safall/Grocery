@@ -27,7 +27,6 @@ class MigrationTest {
 
     private lateinit var db: SupportSQLiteDatabase
 
-
     @Test
     fun verifyMigration1to2CreatedTaskOwnerTable() {
         db = helper.createDatabase(DB_NAME, 1)
@@ -70,6 +69,35 @@ class MigrationTest {
     }
 
     @Test
+    fun verifyMigration3to4AddsColumnsToTaskAndTaskOwnerTable() {
+        db = helper.createDatabase(DB_NAME, 3)
+        db.execSQL("INSERT INTO task VALUES (1, 'test task', 'test task desc')")
+        db.execSQL("INSERT INTO taskOwner VALUES (1, 'test task owner')")
+        db.close()
+        db = helper.runMigrationsAndValidate(
+            DB_NAME,
+            4,
+            true,
+            MyDatabase.migration3to4
+        )
+
+        db.query("SELECT * FROM task")
+            .apply {
+                assertTrue(moveToFirst())
+                assertEquals("test task", getString(getColumnIndex("title")))
+                assertEquals("test task desc", getString(getColumnIndex("description")))
+                assertEquals("LOW", getString(getColumnIndex("priority")))
+            }
+
+        db.query("SELECT * FROM taskOwner")
+            .apply {
+                assertTrue(moveToFirst())
+                assertEquals("test task owner", getString(getColumnIndex("name")))
+                assertEquals("Kathmandu", getString(getColumnIndex("address")))
+            }
+    }
+
+    @Test
     fun testAllMigrations() {
         helper.createDatabase(DB_NAME, 1).apply { close() }
 
@@ -80,7 +108,8 @@ class MigrationTest {
         )
             .addMigrations(
                 MyDatabase.migration1to2,
-                MyDatabase.migration2to3
+                MyDatabase.migration2to3,
+                MyDatabase.migration3to4
             )
             .build()
             .apply { close() }

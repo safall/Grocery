@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
                     id = i.toLong(),
                     title = "Task $i",
                     description = "Description $i",
+                    priority = "HIGH",
                 )
             )
         }
@@ -76,6 +77,7 @@ class MainActivity : ComponentActivity() {
                 TaskOwnerEntity(
                     id = i.toLong(),
                     name = "TaskOwner $i",
+                    address = "Address $i",
                 )
             )
         }

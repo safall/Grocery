@@ -8,5 +8,6 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val title: String,
-    val description: String
+    val description: String,
+    val priority: String
 )

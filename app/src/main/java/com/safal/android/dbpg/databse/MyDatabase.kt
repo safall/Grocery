@@ -14,7 +14,7 @@ import com.safal.android.dbpg.databse.entity.TaskOwnerEntity
     entities = [
         TaskEntity::class,
         TaskOwnerEntity::class
-    ], version = 3, exportSchema = true
+    ], version = 4, exportSchema = true
 )
 abstract class MyDatabase : RoomDatabase() {
 
@@ -51,17 +51,12 @@ abstract class MyDatabase : RoomDatabase() {
                 db.execSQL(CREATE_DELETE_TASK_OWNER_TRIGGER)
             }
         }
-//
-//        val migration3to4 = object : Migration(3, 4) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE task ADD COLUMN priority TEXT NOT NULL DEFAULT 'LOW'")
-//            }
-//        }
-//
-//        val migration4to5 = object : Migration(4, 5) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE taskOwner ADD COLUMN address TEXT NOT NULL DEFAULT 'Kathmandu'")
-//            }
-//        }
+
+        val migration3to4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE task ADD COLUMN priority TEXT NOT NULL DEFAULT 'LOW'")
+                db.execSQL("ALTER TABLE taskOwner ADD COLUMN address TEXT NOT NULL DEFAULT 'Kathmandu'")
+            }
+        }
     }
 }

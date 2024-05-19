@@ -24,10 +24,9 @@ object DatabaseModule {
             .addMigrations(
                 *listOf(
                     MyDatabase.migration1to2,
-                    MyDatabase.migration2to3
+                    MyDatabase.migration2to3,
+                    MyDatabase.migration3to4
                 ).toTypedArray()
-//                MyDatabase.migration3to4,
-//                MyDatabase.migration4to5
             )
             .build()
     }
