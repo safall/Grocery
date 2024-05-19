@@ -103,8 +103,7 @@ class MainActivity : ComponentActivity() {
             taskOwnerDao.insert(
                 TaskOwnerEntity(
                     id = i.toLong(),
-                    name = "TaskOwner $i",
-                    address = "Address $i",
+                    name = "TaskOwner $i"
                 )
             )
         }

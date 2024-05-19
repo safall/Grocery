@@ -98,6 +98,31 @@ class MigrationTest {
     }
 
     @Test
+    fun verifyMigration4to5AddsColumnsToTaskAndTaskOwnerTable() {
+        db = helper.createDatabase(DB_NAME, 4)
+        db.execSQL("INSERT INTO task VALUES (1, 'test task', 'test task desc', 'LOW')")
+        db.execSQL("INSERT INTO taskOwner VALUES (1, 'test task Owner', 'Kathmandu')")
+        db.close()
+        db = helper.runMigrationsAndValidate(
+            DB_NAME,
+            5,
+            true,
+            MyDatabase.migration4to5
+        )
+
+        db.query("SELECT * FROM taskOwner")
+            .apply {
+                assertTrue(moveToFirst())
+                assertEquals("test task Owner", getString(getColumnIndex("name")))
+            }
+        db.query("SELECT * FROM task")
+            .apply {
+                assertTrue(moveToFirst())
+                assertEquals("test task", getString(getColumnIndex("title")))
+            }
+    }
+
+    @Test
     fun testAllMigrations() {
         helper.createDatabase(DB_NAME, 1).apply { close() }
 
@@ -109,7 +134,8 @@ class MigrationTest {
             .addMigrations(
                 MyDatabase.migration1to2,
                 MyDatabase.migration2to3,
-                MyDatabase.migration3to4
+                MyDatabase.migration3to4,
+                MyDatabase.migration4to5
             )
             .build()
             .apply { close() }
