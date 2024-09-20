@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp) apply true
     kotlin("kapt")
 }
@@ -10,11 +11,11 @@ ksp {
 }
 
 android {
-    namespace = "com.safal.android.dbpg"
+    namespace = "com.whitecatlabs.grocery"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.safal.android.dbpg"
+        applicationId = "com.whitecatlabs.grocery"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
