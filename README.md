@@ -1,2 +1,2 @@
-# DBPG
-Android Database Playground
+# Grocery
+Grocery App

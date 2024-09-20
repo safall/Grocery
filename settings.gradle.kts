@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DBPG"
+rootProject.name = "Grocery"
 include(":app")
