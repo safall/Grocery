@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class TaskOwnerEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Long,
-    val name: String
+    val name: String,
 )

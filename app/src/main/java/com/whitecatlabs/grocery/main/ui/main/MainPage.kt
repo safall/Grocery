@@ -32,18 +32,19 @@ import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 @Composable
 fun MainPage(
     viewState: MainContract.ViewState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding(),
-        topBar = { AppBar() }) { innerPadding ->
+        topBar = { AppBar() },
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
                 is MainContract.ViewState.Loading -> Loading()
@@ -57,7 +58,7 @@ fun MainPage(
 private fun Loading() {
     CircularProgressIndicator(
         modifier = Modifier.size(40.dp),
-        color = Color.Blue
+        color = Color.Blue,
     )
 }
 
@@ -69,25 +70,28 @@ private fun Content() {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
 
-        ) {
+    ) {
         Grocery(
             modifier = Modifier
                 .clip(RoundedCornerShape(size = 8.dp))
                 .background(colorResource(id = R.color.green_groceries))
-                .weight(1f, true), title = "Green Groceries"
+                .weight(1f, true),
+            title = "Green Groceries",
         )
         Grocery(
             modifier = Modifier
                 .clip(RoundedCornerShape(size = 8.dp))
                 .background(colorResource(id = R.color.red_groceries))
-                .weight(1f, true), title = "Red Groceries"
+                .weight(1f, true),
+            title = "Red Groceries",
         )
     }
 }
 
 @Composable
 fun Grocery(
-    title: String, modifier: Modifier = Modifier
+    title: String,
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.size(155.dp, 60.dp)) {
         Text(
@@ -98,7 +102,7 @@ fun Grocery(
             text = title,
             color = Color.White,
             textAlign = TextAlign.Center,
-            fontSize = 16.sp
+            fontSize = 16.sp,
         )
     }
 }
@@ -106,17 +110,19 @@ fun Grocery(
 @Composable
 fun AppBar(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically
+        modifier = modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_back), contentDescription = "Back"
+            painter = painterResource(id = R.drawable.ic_back),
+            contentDescription = "Back",
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "Your Groceries",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

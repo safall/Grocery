@@ -11,8 +11,10 @@ import javax.inject.Singleton
 @Database(
     entities = [
         TaskEntity::class,
-        TaskOwnerEntity::class
-    ], version = 1, exportSchema = true
+        TaskOwnerEntity::class,
+    ],
+    version = 1,
+    exportSchema = true,
 )
 @Singleton
 abstract class MyDatabase : RoomDatabase() {
