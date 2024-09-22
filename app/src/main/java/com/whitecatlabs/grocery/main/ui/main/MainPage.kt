@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +30,10 @@ import com.whitecatlabs.grocery.R
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
-fun MainPage(modifier: Modifier = Modifier) {
+fun MainPage(
+    viewState: MainContract.ViewState,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -38,32 +42,48 @@ fun MainPage(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Row(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-
-                ) {
-                Grocery(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(size = 8.dp))
-                        .background(colorResource(id = R.color.green_groceries))
-                        .weight(1f, true), title = "Green Groceries"
-                )
-                Grocery(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(size = 8.dp))
-                        .background(colorResource(id = R.color.red_groceries))
-                        .weight(1f, true), title = "Red Groceries"
-                )
+            when (viewState) {
+                is MainContract.ViewState.Loading -> Loading()
+                is MainContract.ViewState.Result -> Content()
             }
         }
     }
 }
 
+@Composable
+private fun Loading() {
+    CircularProgressIndicator(
+        modifier = Modifier.size(40.dp),
+        color = Color.Blue
+    )
+}
+
+@Composable
+private fun Content() {
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+
+        ) {
+        Grocery(
+            modifier = Modifier
+                .clip(RoundedCornerShape(size = 8.dp))
+                .background(colorResource(id = R.color.green_groceries))
+                .weight(1f, true), title = "Green Groceries"
+        )
+        Grocery(
+            modifier = Modifier
+                .clip(RoundedCornerShape(size = 8.dp))
+                .background(colorResource(id = R.color.red_groceries))
+                .weight(1f, true), title = "Red Groceries"
+        )
+    }
+}
 
 @Composable
 fun Grocery(
@@ -105,6 +125,6 @@ fun AppBar(modifier: Modifier = Modifier) {
 @Composable
 private fun AppBarPreview() {
     AppTheme {
-        MainPage()
+        MainPage(MainContract.ViewState.Loading)
     }
 }
