@@ -35,7 +35,6 @@ import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class LauncherActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,24 +60,24 @@ private fun LauncherPage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(Color.White)
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(20.dp)
+                .padding(20.dp),
 
         ) {
             Spacer(modifier = Modifier.height(127.dp))
             Text(
                 fontSize = 60.sp,
                 fontWeight = FontWeight.Bold,
-                text = "Grocery"
+                text = "Grocery",
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 fontSize = 16.sp,
-                text = "Track your groceries yourself"
+                text = "Track your groceries yourself",
             )
             Spacer(modifier = Modifier.height(10.dp))
             Spacer(
@@ -87,7 +86,7 @@ private fun LauncherPage(modifier: Modifier = Modifier) {
                     .width(100.dp)
                     .height(10.dp)
                     .background(color = colorResource(id = R.color.app_blue))
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(8.dp)),
             )
         }
         Box(
@@ -95,11 +94,10 @@ private fun LauncherPage(modifier: Modifier = Modifier) {
                 .offset(-100.dp, 300.dp)
                 .size(400.dp)
                 .clip(CircleShape)
-                .background(color = colorResource(id = R.color.app_blue))
+                .background(color = colorResource(id = R.color.app_blue)),
         )
     }
 }
-
 
 @Composable
 @Preview

@@ -19,12 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     taskDao: TaskDao,
-    taskOwnerDao: TaskOwnerDao
+    taskOwnerDao: TaskOwnerDao,
 ) : ViewModel() {
 
     val uiState: StateFlow<ViewState> = combine(
         taskDao.fetchAllTask(),
-        taskOwnerDao.fetchAllTaskOwner()
+        taskOwnerDao.fetchAllTaskOwner(),
     ) { taskOwnerEntities, taskEntities ->
         delay(3000)
         Result(taskOwnerEntities, taskEntities)
@@ -33,6 +33,6 @@ class MainViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = Loading
+            initialValue = Loading,
         )
 }
