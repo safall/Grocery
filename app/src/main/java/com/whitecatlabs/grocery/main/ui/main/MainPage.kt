@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.whitecatlabs.grocery.R
+import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
@@ -47,11 +47,22 @@ fun MainPage(
             contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
+                is MainContract.ViewState.Error -> Error()
                 is MainContract.ViewState.Loading -> Loading()
-                is MainContract.ViewState.Result -> Content()
+                is MainContract.ViewState.Result -> Content(viewState.groceryCategories)
             }
         }
     }
+}
+
+@Composable
+private fun Error() {
+    Text(
+        modifier = Modifier.size(40.dp),
+        textAlign = TextAlign.Center,
+        text = "Error Occured Please try again~",
+        color = Color.Red,
+    )
 }
 
 @Composable
@@ -63,28 +74,25 @@ private fun Loading() {
 }
 
 @Composable
-private fun Content() {
+private fun Content(
+    items: List<GroceryCategoryEntity>
+) {
     Row(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
 
-    ) {
-        Grocery(
-            modifier = Modifier
-                .clip(RoundedCornerShape(size = 8.dp))
-                .background(colorResource(id = R.color.green_groceries))
-                .weight(1f, true),
-            title = "Green Groceries",
-        )
-        Grocery(
-            modifier = Modifier
-                .clip(RoundedCornerShape(size = 8.dp))
-                .background(colorResource(id = R.color.red_groceries))
-                .weight(1f, true),
-            title = "Red Groceries",
-        )
+        ) {
+        items.forEach {
+            Grocery(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(size = 8.dp))
+                    .background(Color(android.graphics.Color.parseColor(it.color)))
+                    .weight(1f, true),
+                title = it.title,
+            )
+        }
     }
 }
 
@@ -131,6 +139,6 @@ fun AppBar(modifier: Modifier = Modifier) {
 @Composable
 private fun AppBarPreview() {
     AppTheme {
-        MainPage(MainContract.ViewState.Loading)
+        MainPage(MainContract.ViewState.Error)
     }
 }

@@ -4,15 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.whitecatlabs.grocery.main.databse.entity.TaskEntity
+import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TaskDao {
+interface GroceryCategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg task: TaskEntity)
+    suspend fun insert(vararg category: GroceryCategoryEntity)
 
-    @Query("SELECT * FROM task")
-    fun fetchAllTask(): Flow<List<TaskEntity>>
+    @Query("SELECT * FROM groceryCategory")
+    fun fetchAll(): Flow<List<GroceryCategoryEntity>>
 }
