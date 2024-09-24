@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Upsert
 import com.whitecatlabs.grocery.main.databse.entity.SelectedGroceryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +16,8 @@ interface SelectedGroceryItemDao {
 
     @Query("SELECT * FROM selectedGroceryItem")
     fun fetchAll(): Flow<List<SelectedGroceryEntity>>
+
+    @Transaction
+    @Upsert
+    suspend fun update(entity: SelectedGroceryEntity)
 }

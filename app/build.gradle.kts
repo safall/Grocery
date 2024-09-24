@@ -64,6 +64,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.constraintlayout)
     // Room
     ksp(libs.compilers.room)
     implementation(libs.room.runtime)
@@ -84,6 +85,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.2.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
+    implementation("androidx.fragment:fragment-ktx:1.5.2")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.androidx.roomTesting)
