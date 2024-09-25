@@ -16,7 +16,7 @@ import javax.inject.Singleton
         SelectedGroceryEntity::class,
         GroceryItemEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @Singleton
