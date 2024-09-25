@@ -13,10 +13,9 @@ import androidx.room.ForeignKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    primaryKeys = ["id"]
+    primaryKeys = ["groceryItemId"]
 )
 data class SelectedGroceryEntity(
-    val id: String,
     val groceryItemId: String,
     val isSelected: Boolean
 )

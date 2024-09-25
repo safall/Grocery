@@ -2,16 +2,20 @@ package com.whitecatlabs.grocery.main.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.whitecatlabs.grocery.main.databse.SampleData.categories
+import com.whitecatlabs.grocery.main.databse.SampleData.groceryItems
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +38,14 @@ class MainViewModel @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             flow { ViewState.Error }
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            delay(2000)
+            repository.insertGroceryCategories(items = categories.toTypedArray())
+            repository.insertGroceryItems(items = groceryItems.toTypedArray())
         }
     }
 }
