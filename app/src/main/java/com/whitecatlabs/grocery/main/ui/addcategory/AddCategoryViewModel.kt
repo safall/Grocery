@@ -1,0 +1,40 @@
+package com.whitecatlabs.grocery.main.ui.addcategory
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.whitecatlabs.grocery.main.repository.GroceryRepository
+import com.whitecatlabs.grocery.main.ui.addcategory.AddCategoryContract.ViewState
+import com.whitecatlabs.grocery.main.ui.addcategory.AddCategoryContract.ViewState.Loading
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
+
+@HiltViewModel
+class AddCategoryViewModel @Inject constructor(
+    private val repository: GroceryRepository
+) : ViewModel() {
+
+    val uiState: StateFlow<ViewState> = getAllCategories()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = Loading,
+        )
+
+    private fun getAllCategories(): Flow<ViewState> {
+        return try {
+            repository.getAllMasterCategories()
+                .map { result ->
+                    ViewState.Result(result.map { it.toViewState() })
+                }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            flow { ViewState.Error }
+        }
+    }
+}

@@ -24,7 +24,9 @@ import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 fun AppBar(
     title: String,
     modifier: Modifier = Modifier,
-    onBackButtonClicked: () -> Unit
+    showAction: Boolean = false,
+    onActionButtonClicked: (() -> Unit)? = null,
+    onBackButtonClicked: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier.padding(16.dp),
@@ -46,6 +48,19 @@ fun AppBar(
                     }
                 )
             )
+        },
+        actions = {
+            if (showAction) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_add),
+                    contentDescription = "Add",
+                    modifier = Modifier.clickable(
+                        onClick = {
+                            onActionButtonClicked?.invoke()
+                        }
+                    )
+                )
+            }
         }
     )
 }
@@ -56,7 +71,8 @@ private fun AppBarPreview() {
     AppTheme {
         AppBar(
             modifier = Modifier.background(Color.White),
-            title = "Toolbar Title"
+            title = "Toolbar Title",
+            showAction = true
         ) {
         }
     }

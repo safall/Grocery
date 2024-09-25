@@ -21,6 +21,7 @@ interface GroceryRepository {
     suspend fun insertMasterGrocery(items: List<MasterGroceryEntity>)
     suspend fun insertMasterGroceryItem(items: List<MasterGroceryItemEntity>)
     suspend fun insertGroceryCategories(vararg items: GroceryCategoryEntity)
+    fun getAllMasterCategories(): Flow<List<MasterGroceryEntity>>
     fun getAllGroceryCategories(): Flow<List<GroceryCategoryEntity>>
     fun getItemsWithSelection(id: String): Flow<List<ItemWithSelected>>
     suspend fun insertGroceryItems(vararg items: GroceryItemEntity)
@@ -46,6 +47,10 @@ class GroceryRepositoryDefault @Inject constructor(
 
     override suspend fun insertGroceryCategories(vararg items: GroceryCategoryEntity) {
         return groceryCategoryDao.insert(*items)
+    }
+
+    override fun getAllMasterCategories(): Flow<List<MasterGroceryEntity>> {
+        return masterGroceryDao.fetchAll()
     }
 
     override fun getAllGroceryCategories(): Flow<List<GroceryCategoryEntity>> {

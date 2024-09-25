@@ -1,4 +1,4 @@
-package com.whitecatlabs.grocery.main.ui.main
+package com.whitecatlabs.grocery.main.ui.addcategory
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,14 +24,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
 import com.whitecatlabs.grocery.main.ui.AppBar
 
 @Composable
-fun MainPage(
-    viewState: MainContract.ViewState,
+fun AddCategoryPage(
+    viewState: AddCategoryContract.ViewState,
     modifier: Modifier = Modifier,
-    onEvent: (MainContract.Event) -> Unit
+    onEvent: (AddCategoryContract.Event) -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -39,14 +38,11 @@ fun MainPage(
             .statusBarsPadding(),
         topBar = {
             AppBar(
-                title = "Your Groceries",
+                title = "Select Categories",
+                onBackButtonClicked = { onEvent(AddCategoryContract.Event.BackButtonClickedEvent) },
                 showAction = false,
-                onActionButtonClicked = {
-                    onEvent(MainContract.Event.AddButtonClickedEvent)
-                }
-                ) {
-                onEvent(MainContract.Event.BackButtonClickedEvent)
-            }
+                onActionButtonClicked = { }
+                )
         },
     ) { innerPadding ->
         Box(
@@ -56,10 +52,10 @@ fun MainPage(
             contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
-                is MainContract.ViewState.Error -> Error()
-                is MainContract.ViewState.Loading -> Loading()
-                is MainContract.ViewState.Result -> Content(
-                    viewState.groceryCategories,
+                is AddCategoryContract.ViewState.Error -> Error()
+                is AddCategoryContract.ViewState.Loading -> Loading()
+                is AddCategoryContract.ViewState.Result -> Content(
+                    viewState.items,
                     onEvent
                 )
             }
@@ -87,8 +83,8 @@ private fun Loading() {
 
 @Composable
 private fun Content(
-    items: List<GroceryCategoryEntity>,
-    onEvent: (MainContract.Event) -> Unit
+    items: List<CategoryViewState>,
+    onEvent: (AddCategoryContract.Event) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -105,7 +101,7 @@ private fun Content(
                     modifier = Modifier
                         .clickable(
                             onClick = {
-                                onEvent(MainContract.Event.ItemClickedEvent(it.id, it.title))
+//                                onEvent(AddCategoryContract.Event.ItemClickedEvent(it.id, it.title))
                             }
                         )
                         .clip(RoundedCornerShape(size = 8.dp))

@@ -10,6 +10,7 @@ class MainContract {
     }
 
     sealed interface Event {
+        data object AddButtonClickedEvent : Event
         data object BackButtonClickedEvent : Event
         data class ItemClickedEvent(
             val id: String,

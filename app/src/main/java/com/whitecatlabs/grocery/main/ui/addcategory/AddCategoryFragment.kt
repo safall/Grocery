@@ -1,4 +1,4 @@
-package com.whitecatlabs.grocery.main.ui.main
+package com.whitecatlabs.grocery.main.ui.addcategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
-import com.whitecatlabs.grocery.R
-import com.whitecatlabs.grocery.main.ui.items.ItemsFragment.Companion.KEY_ITEM_ID
-import com.whitecatlabs.grocery.main.ui.items.ItemsFragment.Companion.KEY_ITEM_TITLE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
-    private val viewModel: MainViewModel by viewModels()
+class AddCategoryFragment : Fragment() {
+    private val viewModel: AddCategoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,19 +30,9 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (view as ComposeView).setContent {
             val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
-            MainPage(viewState) { event ->
+            AddCategoryPage(viewState) { event ->
                 when (event) {
-                    is MainContract.Event.AddButtonClickedEvent -> findNavController()
-                        .navigate(R.id.addCategoriesFragment)
-
-                    is MainContract.Event.BackButtonClickedEvent -> requireActivity().finish()
-                    is MainContract.Event.ItemClickedEvent -> findNavController().navigate(
-                        R.id.mainFragmentToItemsFragment,
-                        Bundle().apply {
-                            putString(KEY_ITEM_ID, event.id)
-                            putString(KEY_ITEM_TITLE, event.title)
-                        }
-                    )
+                    is AddCategoryContract.Event.BackButtonClickedEvent -> findNavController().popBackStack()
                 }
             }
         }

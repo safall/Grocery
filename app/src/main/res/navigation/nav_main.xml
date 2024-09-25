@@ -11,6 +11,10 @@
         <action
             android:id="@+id/mainFragmentToItemsFragment"
             app:destination="@id/itemsFragment" />
+
+        <action
+            android:id="@+id/addCategoriesFragment"
+            app:destination="@id/addCategoriesFragment" />
     </fragment>
 
     <fragment
@@ -20,4 +24,8 @@
             android:name="id"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/addCategoriesFragment"
+        android:name="com.whitecatlabs.grocery.main.ui.addcategory.AddCategoryFragment" />
 </navigation>
