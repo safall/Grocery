@@ -5,7 +5,6 @@ import com.whitecatlabs.grocery.main.databse.entity.GroceryItemEntity
 import com.whitecatlabs.grocery.main.databse.entity.SelectedGroceryEntity
 
 object SampleData {
-    val item = "String"
     val categories = listOf(
         GroceryCategoryEntity(
             id = "1",
