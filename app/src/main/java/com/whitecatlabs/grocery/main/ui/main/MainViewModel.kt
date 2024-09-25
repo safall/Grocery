@@ -2,13 +2,12 @@ package com.whitecatlabs.grocery.main.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.whitecatlabs.grocery.main.databse.SampleData.categories
-import com.whitecatlabs.grocery.main.databse.SampleData.groceryItems
+import com.whitecatlabs.grocery.main.databse.MasterTableData.groceries
+import com.whitecatlabs.grocery.main.databse.MasterTableData.groceryItems
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,9 +42,8 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(2000)
-            repository.insertGroceryCategories(items = categories.toTypedArray())
-            repository.insertGroceryItems(items = groceryItems.toTypedArray())
+            repository.insertMasterGrocery(groceries)
+            repository.insertMasterGroceryItem(groceryItems)
         }
     }
 }

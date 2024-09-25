@@ -6,6 +6,8 @@ import androidx.room.migration.Migration
 import com.whitecatlabs.grocery.main.databse.MyDatabase
 import com.whitecatlabs.grocery.main.databse.dao.GroceryCategoryDao
 import com.whitecatlabs.grocery.main.databse.dao.GroceryItemDao
+import com.whitecatlabs.grocery.main.databse.dao.MasterGroceryDao
+import com.whitecatlabs.grocery.main.databse.dao.MasterGroceryItemDao
 import com.whitecatlabs.grocery.main.databse.dao.SelectedGroceryItemDao
 import com.whitecatlabs.grocery.main.databse.migrations.MigrationModule
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
@@ -34,6 +36,19 @@ object DatabaseModule {
         )
             .addMigrations(*migrations.toTypedArray<Migration>())
             .build()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideMasterGroceryDao(database: MyDatabase): MasterGroceryDao {
+        return database.masterGroceryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMasterGroceryItemDao(database: MyDatabase): MasterGroceryItemDao {
+        return database.masterGroceryItemDao()
     }
 
     @Provides

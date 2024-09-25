@@ -48,7 +48,7 @@ class LauncherActivity : ComponentActivity() {
         }
         lifecycleScope.launch {
             delay(3000)
-            val intent = Intent(baseContext, MainActivity::class.java)
+            val intent = Intent(baseContext, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }

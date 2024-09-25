@@ -21,4 +21,10 @@ object MigrationModule {
     fun provideMigration__2_3(migration_2_3: Migration_2_3): Migration {
         return migration_2_3
     }
+
+    @IntoSet
+    @Provides
+    fun provideMigration__3_4(migration_3_4: Migration_3_4): Migration {
+        return migration_3_4
+    }
 }
