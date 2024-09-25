@@ -4,10 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whitecatlabs.grocery.main.databse.SampleData.categories
 import com.whitecatlabs.grocery.main.databse.SampleData.groceryItems
-import com.whitecatlabs.grocery.main.databse.SampleData.selectedItems
-import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
-import com.whitecatlabs.grocery.main.databse.entity.GroceryItemEntity
-import com.whitecatlabs.grocery.main.databse.entity.SelectedGroceryEntity
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState.Loading
@@ -50,7 +46,6 @@ class MainViewModel @Inject constructor(
             delay(2000)
             repository.insertGroceryCategories(*categories.toTypedArray())
             repository.insertGroceryItems(*groceryItems.toTypedArray())
-            repository.insertGrocerySelectedItem(*selectedItems.toTypedArray())
         }
     }
 }

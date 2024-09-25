@@ -87,22 +87,18 @@ object SampleData {
 
     val selectedItems = listOf(
         SelectedGroceryEntity(
-            id = "1",
             groceryItemId = "1",
             isSelected = true
         ),
         SelectedGroceryEntity(
-            id = "2",
             groceryItemId = "2",
             isSelected = true
         ),
         SelectedGroceryEntity(
-            id = "4",
             groceryItemId = "6",
             isSelected = true
         ),
         SelectedGroceryEntity(
-            id = "5",
             groceryItemId = "7",
             isSelected = true
         )

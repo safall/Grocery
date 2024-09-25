@@ -10,10 +10,8 @@ import com.whitecatlabs.grocery.main.databse.entity.SelectedGroceryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.random.Random
 
 interface GroceryRepository {
     suspend fun insertGroceryCategories(vararg items: GroceryCategoryEntity)
@@ -54,7 +52,6 @@ class GroceryRepositoryDefault @Inject constructor(
         return withContext(Dispatchers.IO) {
             selectedGroceryItemDao.update(
                 SelectedGroceryEntity(
-                    id = UUID.randomUUID().toString(),
                     groceryItemId = id,
                     isSelected = isSelected
                 )
