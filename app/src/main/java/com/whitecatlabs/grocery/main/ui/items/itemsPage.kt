@@ -116,11 +116,17 @@ fun Item(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(checked = item.selectedItem?.isSelected ?: false, onCheckedChange = {
-            onEvent(ItemsContract.Event.ItemCheckedEvent(item.groceryItem.itemId, it))
+            onEvent(
+                ItemsContract.Event.ItemCheckedEvent(
+                    item.item.groceryId,
+                    item.item.id,
+                    it
+                )
+            )
         })
         Text(
             fontWeight = FontWeight.Bold,
-            text = item.groceryItem.title,
+            text = item.item.title,
             color = Color.Black,
             textAlign = TextAlign.Start,
             fontSize = 16.sp,

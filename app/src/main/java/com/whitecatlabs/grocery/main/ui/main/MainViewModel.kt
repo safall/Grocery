@@ -32,7 +32,11 @@ class MainViewModel @Inject constructor(
     private fun getAllCategories(): Flow<ViewState> {
         return try {
             repository.getAllGroceryCategories().map {
-                ViewState.Result(it)
+                if (it.isNotEmpty()) {
+                    ViewState.Result(it)
+                } else {
+                    ViewState.Empty
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()

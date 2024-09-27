@@ -2,32 +2,33 @@ package com.whitecatlabs.grocery.main.databse.dao
 
 import androidx.room.Dao
 import androidx.room.Embedded
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Relation
+import androidx.room.Transaction
+import androidx.room.Upsert
 import com.whitecatlabs.grocery.main.databse.entity.GroceryItemEntity
-import com.whitecatlabs.grocery.main.databse.entity.SelectedGroceryEntity
+import com.whitecatlabs.grocery.main.databse.entity.MasterGroceryItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GroceryItemDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
+    @Transaction
     suspend fun insert(vararg item: GroceryItemEntity)
 
     @Query("SELECT * FROM groceryItem")
     fun fetchAll(): Flow<List<GroceryItemEntity>>
 
-    @Query("SELECT * FROM groceryItem WHERE groceryId = :id")
-    fun fetchItemsWithSelected(id: String): Flow<List<ItemWithSelected>>
+    @Query("SELECT * FROM master_grocery_item WHERE groceryId = :groceryId")
+    fun fetchItemsWithSelected(groceryId: String): Flow<List<ItemWithSelected>>
 }
 
 data class ItemWithSelected(
     @Embedded
-    val groceryItem: GroceryItemEntity,
+    val item: MasterGroceryItemEntity,
     @Relation(
-        parentColumn = "itemId",
-        entityColumn = "groceryItemId"
+        parentColumn = "id",
+        entityColumn = "id"
     )
-    val selectedItem: SelectedGroceryEntity?
+    val selectedItem: GroceryItemEntity?
 )
