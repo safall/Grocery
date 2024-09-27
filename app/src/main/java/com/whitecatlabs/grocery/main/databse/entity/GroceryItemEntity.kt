@@ -7,18 +7,25 @@ import androidx.room.ForeignKey
     tableName = "groceryItem",
     foreignKeys = [
         ForeignKey(
-            entity = GroceryCategoryEntity::class,
+            entity = MasterGroceryEntity::class,
             parentColumns = ["id"],
             childColumns = ["groceryId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = MasterGroceryItemEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ],
-    primaryKeys = ["itemId"]
+    primaryKeys = ["id"]
 )
 data class GroceryItemEntity(
-    val itemId: String,
+    val id: String,
     val groceryId: String,
-    val title: String,
-    val description: String,
-    val lastPurchasePrice: String?
+    val lastPurchasePrice: String,
+    val isSelected: Boolean
 )

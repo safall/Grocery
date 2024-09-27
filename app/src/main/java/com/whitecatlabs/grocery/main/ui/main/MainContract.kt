@@ -1,10 +1,10 @@
 package com.whitecatlabs.grocery.main.ui.main
 
-import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
+import com.whitecatlabs.grocery.main.databse.dao.CategoryWithSelected
 
 class MainContract {
     sealed class ViewState {
-        data class Result(val groceryCategories: List<GroceryCategoryEntity>) : ViewState()
+        data class Result(val groceryCategories: List<CategoryWithSelected>) : ViewState()
         data object Loading : ViewState()
         data object Error : ViewState()
     }

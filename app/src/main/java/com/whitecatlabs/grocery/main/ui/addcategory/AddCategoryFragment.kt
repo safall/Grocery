@@ -33,6 +33,7 @@ class AddCategoryFragment : Fragment() {
             AddCategoryPage(viewState) { event ->
                 when (event) {
                     is AddCategoryContract.Event.BackButtonClickedEvent -> findNavController().popBackStack()
+                    is AddCategoryContract.Event.ItemCheckedEvent -> viewModel.consumeEvent(event)
                 }
             }
         }

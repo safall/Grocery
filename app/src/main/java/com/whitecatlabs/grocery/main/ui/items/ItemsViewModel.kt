@@ -46,10 +46,12 @@ class ItemsViewModel @AssistedInject constructor(
             is ItemsContract.Event.ItemCheckedEvent ->
                 viewModelScope.launch {
                     repository.updateItemSelection(
+                        event.groceryId,
                         event.id,
                         event.isChecked
                     )
                 }
+
             else -> Unit
         }
     }

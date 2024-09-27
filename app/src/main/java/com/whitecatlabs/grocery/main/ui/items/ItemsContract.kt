@@ -12,6 +12,10 @@ class ItemsContract {
     sealed interface Event {
         data object BackButtonClickedEvent : Event
         data class ItemClickedEvent(val id: String) : Event
-        data class ItemCheckedEvent(val id: String, val isChecked: Boolean) : Event
+        data class ItemCheckedEvent(
+            val groceryId: String,
+            val id: String,
+            val isChecked: Boolean
+        ) : Event
     }
 }

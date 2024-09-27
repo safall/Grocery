@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
+import com.whitecatlabs.grocery.main.databse.dao.CategoryWithSelected
 import com.whitecatlabs.grocery.main.ui.AppBar
 
 @Composable
@@ -40,7 +40,7 @@ fun MainPage(
         topBar = {
             AppBar(
                 title = "Your Groceries",
-                showAction = false,
+                showAction = true,
                 onActionButtonClicked = {
                     onEvent(MainContract.Event.AddButtonClickedEvent)
                 }
@@ -87,7 +87,7 @@ private fun Loading() {
 
 @Composable
 private fun Content(
-    items: List<GroceryCategoryEntity>,
+    items: List<CategoryWithSelected>,
     onEvent: (MainContract.Event) -> Unit
 ) {
     Box(
@@ -105,12 +105,12 @@ private fun Content(
                     modifier = Modifier
                         .clickable(
                             onClick = {
-                                onEvent(MainContract.Event.ItemClickedEvent(it.id, it.title))
+                                onEvent(MainContract.Event.ItemClickedEvent(it.item.id, it.item.title))
                             }
                         )
                         .clip(RoundedCornerShape(size = 8.dp))
-                        .background(Color(android.graphics.Color.parseColor(it.color))),
-                    title = it.title,
+                        .background(Color(android.graphics.Color.parseColor(it.item.color))),
+                    title = it.item.title,
                 )
             }
         }

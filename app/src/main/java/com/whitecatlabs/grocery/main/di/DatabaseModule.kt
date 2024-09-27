@@ -8,7 +8,6 @@ import com.whitecatlabs.grocery.main.databse.dao.GroceryCategoryDao
 import com.whitecatlabs.grocery.main.databse.dao.GroceryItemDao
 import com.whitecatlabs.grocery.main.databse.dao.MasterGroceryDao
 import com.whitecatlabs.grocery.main.databse.dao.MasterGroceryItemDao
-import com.whitecatlabs.grocery.main.databse.dao.SelectedGroceryItemDao
 import com.whitecatlabs.grocery.main.databse.migrations.MigrationModule
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
 import com.whitecatlabs.grocery.main.repository.GroceryRepositoryDefault
@@ -61,12 +60,6 @@ object DatabaseModule {
     @Singleton
     fun provideGroceryItemDao(database: MyDatabase): GroceryItemDao {
         return database.groceryItemDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSelectedGroceryItemDao(database: MyDatabase): SelectedGroceryItemDao {
-        return database.selectedGroceryItemDao()
     }
 
     @Provides
