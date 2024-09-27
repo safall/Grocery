@@ -20,12 +20,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.whitecatlabs.grocery.R
 import com.whitecatlabs.grocery.main.databse.dao.CategoryWithSelected
 import com.whitecatlabs.grocery.main.ui.AppBar
+import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
 fun MainPage(
@@ -39,12 +43,12 @@ fun MainPage(
             .statusBarsPadding(),
         topBar = {
             AppBar(
-                title = "Your Groceries",
+                title = "Your Categories",
                 showAction = true,
                 onActionButtonClicked = {
                     onEvent(MainContract.Event.AddButtonClickedEvent)
                 }
-                ) {
+            ) {
                 onEvent(MainContract.Event.BackButtonClickedEvent)
             }
         },
@@ -56,6 +60,7 @@ fun MainPage(
             contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
+                is MainContract.ViewState.Empty -> EmptyState()
                 is MainContract.ViewState.Error -> Error()
                 is MainContract.ViewState.Loading -> Loading()
                 is MainContract.ViewState.Result -> Content(
@@ -68,12 +73,24 @@ fun MainPage(
 }
 
 @Composable
-private fun Error() {
+private fun EmptyState(modifier: Modifier = Modifier) {
     Text(
-        modifier = Modifier.size(40.dp),
+        modifier = modifier.padding(16.dp),
         textAlign = TextAlign.Center,
-        text = "Error Occured Please try again~",
-        color = Color.Red,
+        fontWeight = FontWeight.Bold,
+        text = "You don't have any categories selected. \n Click + icon to get started",
+        color = colorResource(R.color.purple_700),
+    )
+}
+
+@Composable
+private fun Error(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier.padding(16.dp),
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
+        text = "Apologies for inconvenience. \n Please try again later!",
+        color = Color.Red
     )
 }
 
@@ -105,7 +122,12 @@ private fun Content(
                     modifier = Modifier
                         .clickable(
                             onClick = {
-                                onEvent(MainContract.Event.ItemClickedEvent(it.item.id, it.item.title))
+                                onEvent(
+                                    MainContract.Event.ItemClickedEvent(
+                                        it.item.id,
+                                        it.item.title
+                                    )
+                                )
                             }
                         )
                         .clip(RoundedCornerShape(size = 8.dp))
@@ -136,5 +158,15 @@ fun Grocery(
             textAlign = TextAlign.Center,
             fontSize = 12.sp,
         )
+    }
+}
+
+@Preview
+@Composable
+private fun mainpage() {
+    AppTheme {
+        MainPage(viewState = MainContract.ViewState.Error) {
+
+        }
     }
 }

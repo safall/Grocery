@@ -4,6 +4,7 @@ import com.whitecatlabs.grocery.main.databse.dao.CategoryWithSelected
 
 class MainContract {
     sealed class ViewState {
+        data object Empty : ViewState()
         data class Result(val groceryCategories: List<CategoryWithSelected>) : ViewState()
         data object Loading : ViewState()
         data object Error : ViewState()
