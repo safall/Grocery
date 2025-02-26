@@ -93,6 +93,11 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
     implementation("androidx.fragment:fragment-ktx:1.5.2")
 
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.core)
+
     implementation(libs.kotlinx.serialization)
 
     testImplementation(libs.junit)
