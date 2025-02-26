@@ -26,13 +26,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.whitecatlabs.grocery.R
 import com.whitecatlabs.grocery.main.databse.dao.CategoryWithSelected
 import com.whitecatlabs.grocery.main.ui.AppBar
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
-fun MainPage(
+fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel(),
+    onEvent: (MainContract.Event) -> Unit
+) {
+    val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
+    MainPage(viewState) { onEvent(it) }
+}
+
+@Composable
+private fun MainPage(
     viewState: MainContract.ViewState,
     modifier: Modifier = Modifier,
     onEvent: (MainContract.Event) -> Unit
@@ -163,10 +174,8 @@ fun Grocery(
 
 @Preview
 @Composable
-private fun mainpage() {
+private fun MainPagePreview() {
     AppTheme {
-        MainPage(viewState = MainContract.ViewState.Error) {
-
-        }
+        MainPage(viewState = MainContract.ViewState.Error) {}
     }
 }
