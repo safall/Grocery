@@ -1,12 +1,22 @@
 package com.whitecatlabs.grocery.main
 
-import androidx.activity.viewModels
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.viewModels
-import com.whitecatlabs.grocery.R
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import com.whitecatlabs.grocery.main.app.App
+import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : FragmentActivity(R.layout.activity_main) {
-    private val viewModel: HomeViewModel by viewModels()
+class HomeActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            AppTheme {
+                App()
+            }
+        }
+    }
 }

@@ -26,11 +26,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.whitecatlabs.grocery.main.ui.AppBar
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
-fun AddCategoryPage(
+fun AddCategoryScreen(
+    viewModel: AddCategoryViewModel = hiltViewModel(),
+    onBackPressed: () -> Unit
+) {
+    val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
+    AddCategoryPage(viewState) { event ->
+        when (event) {
+            is AddCategoryContract.Event.BackButtonClickedEvent -> onBackPressed()
+            is AddCategoryContract.Event.ItemCheckedEvent -> viewModel.consumeEvent(event)
+        }
+    }
+}
+
+@Composable
+private fun AddCategoryPage(
     viewState: AddCategoryContract.ViewState,
     modifier: Modifier = Modifier,
     onEvent: (AddCategoryContract.Event) -> Unit
@@ -149,15 +165,15 @@ fun Grocery(
 
 @Composable
 @Preview
-private fun ItemPreview() {
+private fun AddCategoryScreenPreview() {
     AppTheme {
-        Scaffold {
-            Grocery(
-                modifier = Modifier.padding(it),
-                item = CategoryViewState("1", "APple", color = "#0f0f0f0f", isSelected = true)
-            ) {
-
-            }
-        }
+        AddCategoryPage(
+            viewState = AddCategoryContract.ViewState.Result(
+                listOf(
+                    CategoryViewState("1", "Apple", color = "#0f0f0f0f", isSelected = true),
+                    CategoryViewState("2", "Orange", color = "#0f0f0f0f", isSelected = true)
+                )
+            )
+        ) {}
     }
 }
