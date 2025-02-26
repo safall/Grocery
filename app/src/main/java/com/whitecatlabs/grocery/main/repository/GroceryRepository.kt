@@ -13,6 +13,7 @@ import com.whitecatlabs.grocery.main.databse.entity.MasterGroceryEntity
 import com.whitecatlabs.grocery.main.databse.entity.MasterGroceryItemEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,27 +36,33 @@ class GroceryRepositoryDefault @Inject constructor(
     private val groceryItemDao: GroceryItemDao,
 ) : GroceryRepository {
     override suspend fun insertMasterGrocery(items: List<MasterGroceryEntity>) {
-        return masterGroceryDao.insert(*items.toTypedArray())
+        return withContext(Dispatchers.IO) {
+            masterGroceryDao.insert(*items.toTypedArray())
+        }
     }
 
     override suspend fun insertMasterGroceryItem(items: List<MasterGroceryItemEntity>) {
-        return masterGroceryItemDao.insert(*items.toTypedArray())
+        return withContext(Dispatchers.IO) {
+            masterGroceryItemDao.insert(*items.toTypedArray())
+        }
     }
 
     override suspend fun insertGroceryCategories(items: List<GroceryCategoryEntity>) {
-        return groceryCategoryDao.insert(*items.toTypedArray())
+        return withContext(Dispatchers.IO) {
+            groceryCategoryDao.insert(*items.toTypedArray())
+        }
     }
 
     override fun getAllMasterCategories(): Flow<List<MasterCategoryWithSelecte>> {
-        return masterGroceryDao.fetchAll()
+        return masterGroceryDao.fetchAll().flowOn(Dispatchers.IO)
     }
 
     override fun getAllGroceryCategories(): Flow<List<CategoryWithSelected>> {
-        return groceryCategoryDao.fetchAll()
+        return groceryCategoryDao.fetchAll().flowOn(Dispatchers.IO)
     }
 
     override fun getItemsWithSelection(id: String): Flow<List<ItemWithSelected>> {
-        return groceryItemDao.fetchItemsWithSelected(id)
+        return groceryItemDao.fetchItemsWithSelected(id).flowOn(Dispatchers.IO)
     }
 
     override suspend fun updateItemSelection(groceryId: String, id: String, isSelected: Boolean) {
