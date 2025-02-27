@@ -2,12 +2,11 @@ package com.whitecatlabs.grocery.main.app
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.whitecatlabs.grocery.main.ui.addcategory.AddCategoryScreen
 import com.whitecatlabs.grocery.main.ui.items.ItemsScreen
 import com.whitecatlabs.grocery.main.ui.main.MainContract
@@ -29,8 +28,6 @@ sealed interface NavigationDestination {
 @Composable
 fun App() {
     val navController = rememberNavController()
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-
     val activity = LocalContext.current as Activity
 
     NavHost(
@@ -58,11 +55,10 @@ fun App() {
         }
 
         composable<NavigationDestination.Items> {
-            val categoryId = currentBackStackEntry?.arguments?.getString("categoryId") ?: ""
-            val title = currentBackStackEntry?.arguments?.getString("title") ?: ""
+            val arguments = it.toRoute<NavigationDestination.Items>()
             ItemsScreen(
-                categoryId = categoryId,
-                title = title,
+                categoryId = arguments.categoryId,
+                title = arguments.title,
                 onBackPressed = { navController.popBackStack() }
             )
         }
