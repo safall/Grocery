@@ -15,8 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
 interface GroceryRepository {
     suspend fun insertMasterGrocery(items: List<MasterGroceryEntity>)
@@ -28,8 +26,7 @@ interface GroceryRepository {
     suspend fun updateItemSelection(groceryId: String, id: String, isSelected: Boolean)
 }
 
-@Singleton
-class GroceryRepositoryDefault @Inject constructor(
+class GroceryRepositoryDefault(
     private val masterGroceryDao: MasterGroceryDao,
     private val masterGroceryItemDao: MasterGroceryItemDao,
     private val groceryCategoryDao: GroceryCategoryDao,

@@ -10,7 +10,6 @@ import com.whitecatlabs.grocery.main.databse.entity.GroceryCategoryEntity
 import com.whitecatlabs.grocery.main.databse.entity.GroceryItemEntity
 import com.whitecatlabs.grocery.main.databse.entity.MasterGroceryEntity
 import com.whitecatlabs.grocery.main.databse.entity.MasterGroceryItemEntity
-import javax.inject.Singleton
 
 @Database(
     entities = [
@@ -22,7 +21,6 @@ import javax.inject.Singleton
     version = 5,
     exportSchema = true,
 )
-@Singleton
 abstract class MyDatabase : RoomDatabase() {
     abstract fun masterGroceryDao(): MasterGroceryDao
     abstract fun masterGroceryItemDao(): MasterGroceryItemDao

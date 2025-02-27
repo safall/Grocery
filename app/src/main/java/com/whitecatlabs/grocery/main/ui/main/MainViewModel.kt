@@ -7,7 +7,6 @@ import com.whitecatlabs.grocery.main.databse.MasterTableData.groceryItems
 import com.whitecatlabs.grocery.main.repository.GroceryRepository
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState
 import com.whitecatlabs.grocery.main.ui.main.MainContract.ViewState.Loading
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,10 +14,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val repository: GroceryRepository
 ) : ViewModel() {
 
