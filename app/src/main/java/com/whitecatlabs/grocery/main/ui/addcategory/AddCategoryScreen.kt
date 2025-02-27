@@ -26,27 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.whitecatlabs.grocery.main.ui.AppBar
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
 
 @Composable
 fun AddCategoryScreen(
-    viewModel: AddCategoryViewModel = hiltViewModel(),
-    onBackPressed: () -> Unit
-) {
-    val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
-    AddCategoryPage(viewState) { event ->
-        when (event) {
-            is AddCategoryContract.Event.BackButtonClickedEvent -> onBackPressed()
-            is AddCategoryContract.Event.ItemCheckedEvent -> viewModel.consumeEvent(event)
-        }
-    }
-}
-
-@Composable
-private fun AddCategoryPage(
     viewState: AddCategoryContract.ViewState,
     modifier: Modifier = Modifier,
     onEvent: (AddCategoryContract.Event) -> Unit
@@ -167,7 +151,7 @@ fun Grocery(
 @Preview
 private fun AddCategoryScreenPreview() {
     AppTheme {
-        AddCategoryPage(
+        AddCategoryScreen(
             viewState = AddCategoryContract.ViewState.Result(
                 listOf(
                     CategoryViewState("1", "Apple", color = "#0f0f0f0f", isSelected = true),

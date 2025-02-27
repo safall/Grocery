@@ -24,37 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.whitecatlabs.grocery.main.databse.dao.ItemWithSelected
 import com.whitecatlabs.grocery.main.ui.AppBar
 
 @Composable
 fun ItemsScreen(
-    categoryId: String,
-    title: String,
-    viewModel: ItemsViewModel = hiltViewModel(
-        creationCallback = { factory: ItemsViewModel.Factory ->
-            factory.create(categoryId)
-        }
-    ),
-    onBackPressed: () -> Unit
-) {
-    val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
-    ItemsPage(
-        title = title,
-        viewState = viewState
-    ) {
-        when (it) {
-            is ItemsContract.Event.BackButtonClickedEvent -> onBackPressed()
-            is ItemsContract.Event.ItemClickedEvent -> Unit
-            is ItemsContract.Event.ItemCheckedEvent -> viewModel.consumeEvent(it)
-        }
-    }
-}
-
-@Composable
-private fun ItemsPage(
     title: String,
     viewState: ItemsContract.ViewState,
     modifier: Modifier = Modifier,
