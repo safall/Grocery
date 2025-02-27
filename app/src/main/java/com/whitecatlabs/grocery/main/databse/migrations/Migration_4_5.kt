@@ -2,12 +2,9 @@ package com.whitecatlabs.grocery.main.databse.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Suppress("ClassNaming", "MagicNumber")
-@Singleton
-class Migration_4_5 @Inject constructor() : Migration(4, 5) {
+class Migration_4_5 : Migration(4, 5) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL(DROP_GROCERY)
         db.execSQL(DROP_GROCERY_ITEM)

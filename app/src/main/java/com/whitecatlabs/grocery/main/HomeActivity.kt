@@ -6,16 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.whitecatlabs.grocery.main.app.App
 import com.whitecatlabs.grocery.main.ui.theme.AppTheme
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.compose.KoinAndroidContext
 
-@AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                App()
+                KoinAndroidContext {
+                    App()
+                }
             }
         }
     }

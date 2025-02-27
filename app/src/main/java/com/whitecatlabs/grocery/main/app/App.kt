@@ -3,7 +3,6 @@ package com.whitecatlabs.grocery.main.app
 import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +18,8 @@ import com.whitecatlabs.grocery.main.ui.main.MainContract
 import com.whitecatlabs.grocery.main.ui.main.MainScreen
 import com.whitecatlabs.grocery.main.ui.main.MainViewModel
 import kotlinx.serialization.Serializable
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 
 sealed interface NavigationDestination {
@@ -42,7 +43,7 @@ fun App() {
         startDestination = NavigationDestination.Main,
     ) {
         composable<NavigationDestination.Main> {
-            val viewModel: MainViewModel = hiltViewModel()
+            val viewModel: MainViewModel = koinViewModel()
             val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
             MainScreen(viewState = viewState) { event ->
                 when (event) {
@@ -65,11 +66,7 @@ fun App() {
 
         composable<NavigationDestination.Items> {
             val arguments = it.toRoute<NavigationDestination.Items>()
-            val viewModel: ItemsViewModel = hiltViewModel(
-                creationCallback = { factory: ItemsViewModel.Factory ->
-                    factory.create(arguments.categoryId)
-                }
-            )
+            val viewModel: ItemsViewModel = koinViewModel { parametersOf(arguments.categoryId) }
             val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
             ItemsScreen(
                 title = arguments.title,
@@ -87,7 +84,7 @@ fun App() {
         }
 
         composable<NavigationDestination.AddCategory> {
-            val viewModel: AddCategoryViewModel = hiltViewModel()
+            val viewModel: AddCategoryViewModel = koinViewModel()
             val viewState = viewModel.uiState.collectAsStateWithLifecycle().value
             AddCategoryScreen(viewState) { event ->
                 when (event) {
